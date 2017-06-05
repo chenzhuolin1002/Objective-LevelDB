@@ -208,7 +208,7 @@ LevelDBOptions MakeLevelDBOptions() {
 
 #pragma mark - Setters
 
-- (void) setObject:(id)value forKey:(id)key {
+- (BOOL) setObject:(id)value forKey:(id)key {
     AssertDBExists(db);
     AssertKeyType(key);
     NSParameterAssert(value != nil);
@@ -221,15 +221,17 @@ LevelDBOptions MakeLevelDBOptions() {
     
     leveldb::Status status = db->Put(writeOptions, k, v);
     
-    if(!status.ok()) {
+    BOOL ok = status.ok();
+    if(!ok) {
         NSLog(@"Problem storing key/value pair in database: %s", status.ToString().c_str());
     }
+    return ok;
 }
-- (void) setValue:(id)value forKey:(NSString *)key {
-    [self setObject:value forKey:key];
+- (BOOL) setValue:(id)value forKey:(NSString *)key {
+    return [self setObject:value forKey:key];
 }
-- (void) setObject:(id)value forKeyedSubscript:(id)key {
-    [self setObject:value forKey:key];
+- (BOOL) setObject:(id)value forKeyedSubscript:(id)key {
+    return [self setObject:value forKey:key];
 }
 - (void) addEntriesFromDictionary:(NSDictionary *)dictionary {
     [dictionary enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {

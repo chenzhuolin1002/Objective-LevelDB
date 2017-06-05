@@ -152,17 +152,17 @@ NSData   * NSDataFromLevelDBKey  (LevelDBKey * key);
  @param value The value to put in the database
  @param key The key at which the value can be found
  */
-- (void) setObject:(id)value forKey:(id)key;
+- (BOOL) setObject:(id)value forKey:(id)key;
 
 /**
  Same as `[self setObject:forKey:]`
  */
-- (void) setObject:(id)value forKeyedSubscript:(id)key;
+- (BOOL) setObject:(id)value forKeyedSubscript:(id)key;
 
 /**
  Same as `[self setObject:forKey:]`
  */
-- (void) setValue:(id)value forKey:(NSString *)key ;
+- (BOOL) setValue:(id)value forKey:(NSString *)key ;
 
 /**
  Take all key-value pairs in the provided dictionary and insert them in the database
